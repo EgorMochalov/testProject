@@ -2,8 +2,7 @@ const {articles} = require('./modules')
 
 class article_controller {
     async article_add(req, res) {
-        const { title, text } = req.body
-        await articles.create({title:title,text:text}).then(()=>{
+        await articles.create({title:req["body"]["title"],text:req["body"]["text"]}).then(()=>{
             res.json("Добавлено")
         })
     }
@@ -31,12 +30,11 @@ class article_controller {
     }
     async article_patch(req, res, next) {
         const { id } = req.params
-        const {title,text} = req.body
         if (!id) {
             return res.jsno('Не задан ID')
         }
         else{
-            await articles.update({title:title,text:text},{
+            await articles.update({title:req["body"]["title"],text:req["body"]["text"]},{
                 where:{id:Number(id)}
             }).then(()=>{
                 res.json("Обновлено")

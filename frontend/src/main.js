@@ -5,7 +5,6 @@ import { loadFonts } from './plugins/webfontloader'
 import router from './router'
 
 
-
 loadFonts()
 
 createApp(App)

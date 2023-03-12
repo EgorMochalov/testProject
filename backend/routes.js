@@ -1,3 +1,4 @@
+const { query } = require('express')
 const articles_controller = require('./articles_controller')
 const comments_controller = require('./comments_controller')
 const router = app => {
@@ -18,5 +19,8 @@ const router = app => {
     app.route('/articles/:idArticle/comments')
     .get(comments_controller.comments_get_all)
     .post(comments_controller.comments_add)
+
+    app.route('/analytic/comments/',{query:{'dateFrom':'timestamp','dateTo':'timestamp2'}})
+    .get(comments_controller.comments_get_filter)
 }
 module.exports = router;

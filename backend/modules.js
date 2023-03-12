@@ -12,8 +12,8 @@ const comments = sequelize.define('comments', {
     text: { type: DataTypes.STRING, allowNull: false }
 })
 
-articles.hasMany(comments)
-comments.belongsTo(articles)
+articles.hasMany(comments,{ onDelete: 'cascade' })
+comments.belongsTo(articles,{onDelete: 'cascade'})
 
 
 articles.sync();

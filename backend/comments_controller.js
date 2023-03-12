@@ -1,4 +1,6 @@
 const {comments} = require('./modules')
+const {Op} = require('sequelize')
+const { DataTypes } = require('sequelize')
 
 class comments_controller {
     async comments_add(req, res) {
@@ -47,6 +49,31 @@ class comments_controller {
     async comments_get_all(req, res) {
         const { idArticle } = req.params
         res.json(await comments.findAll({where:{articleId:Number(idArticle)}}))
+    }
+    async comments_get_filter (req, res) {
+        const { dateFrom,dateTo } = req.query
+        if(dateTo!='null' && dateFrom!='null'){
+            res.json(await comments.findAll({where:{
+                createdAt:{
+                    [Op.gte]:dateFrom,
+                    [Op.lte]:dateTo,
+                },
+            }}))
+        }
+        else if (dateTo=='null'){
+            res.json(await comments.findAll({where:{
+                createdAt:{
+                    [Op.gte]:dateFrom,
+                },
+            }}))
+        }
+        else if (dateFrom=='null'){
+            res.json(await comments.findAll({where:{
+                createdAt:{
+                    [Op.lte]:dateTo,
+                },
+            }}))
+        }
     }
 }
 
