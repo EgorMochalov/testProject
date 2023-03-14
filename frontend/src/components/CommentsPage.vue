@@ -13,7 +13,6 @@
                         <h3 class="mr-5 mt-5">До</h3>
                         <v-text-field v-model="dateTo" v-on:change="testDataF" type="datetime-local"></v-text-field>
                     </div>
-                    <v-btn v-on:click="testDataF">erer</v-btn>
                 </div>
             </div>
             <v-card v-if="commentsList.length != 0">
@@ -99,7 +98,7 @@ export default {
                 })
         },
         async testDataF(){
-            await axios.get('http://localhost:3002/analytic/comments/?dateFrom='+this.dateFrom+'&dateTo='+this.dateTo).then(res=>this.commentsList=res.data)
+            await axios.get('http://localhost:3002/analytic/comments/?dateFrom='+this.dateFrom+'&dateTo='+this.dateTo).then(res=>{this.commentsList=res.data.filter(item=>Number(item.articleId)==Number(this.id))})
         }
     }
 }
